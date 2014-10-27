@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+		<header>
+			<h1>Chitter</h1>
+
+			<section class="welcome">
+				<% if current_user %>
+				<span class="user_welcome">	Welcome, <%= current_user.user_name %>
+				</span>
+			</section>
+
+			<form class="signing" method="post" action="/sessions">
+				<input type="hidden" name="_method" value="delete">
+				<input type="submit" value="Sign out">
+			</form>
+
+				<% else %>
+					<a href="/users/new" id="sign_up" class="button">Sign up</a>
+					<a href="/sessions/new" id="sign_in" class="button">Sign in</a>
+				<% end %>
+
+		</header>
+		
+		<section class="new-post">
+			<% if current_user %>
+				<form action="/posts" method="post">
+					Say something: <input type="text" name="post">
+					<input type="submit" value="Post">
+				</form>
+			<% end %>
+		</section>
+
+		<div class="posts">
+			<ul>
+				<% @posts.reverse.each do |post| %>
+				<li><%= post.post %> <%= post.user_name %></li>
+				<% end %>
+			</ul>
+		</div>
+	</body>
+</html>
